@@ -12,12 +12,31 @@ class Game:
 
         self.background_image = GameObject(0, 0, self.width, self.height, 'assets/background.png')
         self.treasure = GameObject(375, 50, 50, 50, 'assets/treasure.png')
+
+        self.level = 1.0
+
+        self.reset_map()
+
+    def reset_map(self):
         self.player = Player(375, 700, 50, 50, 'assets/player.png', 3)
-        self.enemies = [
-            Enemy(50, 600, 50, 50, 'assets/enemy.png', 3),
-            Enemy(750, 400, 50, 50, 'assets/enemy.png', 3),
-            Enemy(50, 200, 50, 50, 'assets/enemy.png', 3),
-        ]
+        speed = 5 + (self.level * 5)
+
+        if self.level >= 4.0:
+            self.enemies = [
+                Enemy(50, 600, 50, 50, 'assets/enemy.png', speed),
+                Enemy(750, 400, 50, 50, 'assets/enemy.png', speed),
+                Enemy(50, 200, 50, 50, 'assets/enemy.png', speed),
+            ]
+        elif self.level >= 2.0:
+            self.enemies = [
+                Enemy(50, 600, 50, 50, 'assets/enemy.png', speed),
+                Enemy(750, 400, 50, 50, 'assets/enemy.png', speed),
+            ]
+        else:
+            self.enemies = [
+                Enemy(50, 200, 50, 50, 'assets/enemy.png', speed),
+            ]
+
 
     def draw_objects(self):
         self.game_window.fill(self.color)
@@ -46,9 +65,11 @@ class Game:
     def check_if_collided(self):
         for enemy in self.enemies:
             if self.detect_collision(enemy):
+                self.level = 1.0
                 return True
 
         if self.detect_collision(self.treasure):
+            self.level += 0.5
             return True
         
 
@@ -80,6 +101,6 @@ class Game:
             self.draw_objects()
 
             if self.check_if_collided():
-                return
+                self.reset_map()
 
             self.clock.tick(60)
