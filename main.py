@@ -4,7 +4,7 @@ pygame.init()
 
 width = 800
 height = 800
-color = (204, 153, 255)
+color = (0, 0, 0)
 game_window = pygame.display.set_mode((width, height))
 clock = pygame.time.Clock()
 
