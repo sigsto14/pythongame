@@ -8,6 +8,7 @@ color = (0, 0, 0)
 game_window = pygame.display.set_mode((width, height))
 clock = pygame.time.Clock()
 
+background_image = pygame.transform.scale(pygame.image.load('assets/background.png'), (width, height))
 def run_game_loop():
     while True:
 
@@ -22,6 +23,7 @@ def run_game_loop():
         # execute logic 
         # update display
         game_window.fill(color)
+        game_window.blit(background_image, (0,0))
         pygame.display.update()
 
         clock.tick(60)
